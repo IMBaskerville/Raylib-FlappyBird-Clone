@@ -68,17 +68,8 @@ namespace FlappyBird
         {
             _player.Update(_dt);
             _pipe.Update(_dt);
-
-            if (_pipe.IsOutOfBounds())
-            {
-                _player.IncreaseScore();
-                Console.WriteLine($"{_player.Score}");
-            }
-
-            if (Crashed())
-            {
-                RestartGame();
-            }
+            UpdateScore();
+            CheckCollision();
         }
 
         private void Render()
@@ -140,6 +131,23 @@ namespace FlappyBird
         {
             _player.InitPlayer();
             _pipe.ClearPipes();
+        }
+
+        private void UpdateScore()
+        {
+            if (_pipe.IsOutOfBounds())
+            {
+                _player.IncreaseScore();
+                Console.WriteLine($"{_player.Score}");
+            }
+        }
+
+        private void CheckCollision()
+        {
+            if (Crashed())
+            {
+                RestartGame();
+            }
         }
 
         private bool Crashed()
