@@ -39,6 +39,9 @@ namespace FlappyBird
             return _pipes;
         }
 
+        /// <summary>
+        /// Checks if the first pipe is leaving the screen
+        /// </summary> 
         public bool IsOutOfBounds()
         {
             if (_pipes[0].X < 0 && !IsCounted)
@@ -69,17 +72,6 @@ namespace FlappyBird
             }
         }
 
-        private void SpawnPipe()
-        {
-            int count = _pipes.Count;
-            // Spawn pipes if there is no pipe
-            // Or if the last pipe on the list is at the spawn position
-            if ((count == 0) || (_pipes[count - 1].X <= SPAWN_POS))
-            {
-                _pipes.Add(new Vector2(Game.WIDTH, SetPipeHeight()));
-            }
-        }
-
         private void MovePipes(float dt)
         {
             for (int i = 0; i < _pipes.Count; i++)
@@ -96,6 +88,17 @@ namespace FlappyBird
             {
                 _pipes.RemoveAt(0);
                 IsCounted = false;
+            }
+        }
+
+        private void SpawnPipe()
+        {
+            int count = _pipes.Count;
+            // Spawn pipes if there is no pipe
+            // Or if the last pipe on the list is at the spawn position
+            if ((count == 0) || (_pipes[count - 1].X <= SPAWN_POS))
+            {
+                _pipes.Add(new Vector2(Game.WIDTH, SetPipeHeight()));
             }
         }
 
