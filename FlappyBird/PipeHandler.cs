@@ -39,21 +39,22 @@ namespace FlappyBird
             return _pipes;
         }
 
+        public bool IsOutOfBounds()
+        {
+            if (_pipes[0].X < 0 && !IsCounted)
+            {
+                IsCounted = true;
+                return true;
+            }
+
+            return false;
+        }
+
         public void Update(float dt)
         {
             SpawnPipe();
-            for (int i = 0; i < _pipes.Count; i++)
-            {
-                var temp = _pipes[i];
-                temp.X -= SPEED * dt;
-                _pipes[i] = temp;
-            }
-
-            if (_pipes[0].X + WIDTH < 0)
-            {
-                _pipes.RemoveAt(0);
-                IsCounted = false;
-            }
+            MovePipes(dt);
+            RemoveFirstPipe();
         }
 
         public void Render()
@@ -79,15 +80,23 @@ namespace FlappyBird
             }
         }
 
-        public bool IsOutOfBounds()
+        private void MovePipes(float dt)
         {
-            if (_pipes[0].X < 0 && !IsCounted)
+            for (int i = 0; i < _pipes.Count; i++)
             {
-                IsCounted = true;
-                return true;
+                var temp = _pipes[i];
+                temp.X -= SPEED * dt;
+                _pipes[i] = temp;
             }
+        }
 
-            return false;
+        private void RemoveFirstPipe()
+        {
+            if (_pipes[0].X + WIDTH < 0)
+            {
+                _pipes.RemoveAt(0);
+                IsCounted = false;
+            }
         }
 
         private float SetPipeHeight()
