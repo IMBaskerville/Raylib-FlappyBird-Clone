@@ -95,6 +95,8 @@ namespace FlappyBird
             {
                 DrawPausedGameText();
             }
+
+            DisplayScore();
         }
 
         private void DrawRunningGameText()
@@ -110,6 +112,12 @@ namespace FlappyBird
         private void DrawGameStateText(string state)
         {
             DrawText($"Game is {state}", TEXT_X, 10, FONT_SIZE, TEXT_COLOR);
+        }
+
+        private void DisplayScore()
+        {
+            DrawText($"Max Score: {_player.MaxScore}", TEXT_X, 30, FONT_SIZE, TEXT_COLOR);
+            DrawText($"Score: {_player.Score}", TEXT_X, 50, FONT_SIZE, TEXT_COLOR);
         }
 
         private void CreateWindow()
@@ -138,7 +146,6 @@ namespace FlappyBird
             if (_pipe.IsOutOfBounds())
             {
                 _player.IncreaseScore();
-                Console.WriteLine($"{_player.Score}");
             }
         }
 
